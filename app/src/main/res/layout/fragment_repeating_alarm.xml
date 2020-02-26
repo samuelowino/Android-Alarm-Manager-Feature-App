@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/repeating_set_button"
         android:text="Set Alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

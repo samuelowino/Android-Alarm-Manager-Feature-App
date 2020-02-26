@@ -108,7 +108,7 @@
 
 
         <Button
-            android:id="@+id/in_exact_repating_button"
+            android:id="@+id/exact_repating_button"
             android:layout_margin="2dp"
             android:textAllCaps="true"
             android:text="Exact Repeating"
