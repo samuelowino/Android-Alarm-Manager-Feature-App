@@ -1,6 +1,7 @@
 package org.kazitek.androidalarm_labs;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlarmManager;
@@ -9,7 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.kazitek.androidalarm_labs.adapter.ViewPagerAdapter;
+
 public class MainActivity extends AppCompatActivity {
+
+    ViewPagerAdapter adapter;
 
     AlarmManager alarmManager;
     ViewPager viewPager;
@@ -104,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 deActivateOptionButton(repeatingButton);
             }
         });
+
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPager.setAdapter(adapter);
 
     }
 

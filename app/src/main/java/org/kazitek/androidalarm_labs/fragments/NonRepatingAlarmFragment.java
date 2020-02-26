@@ -28,6 +28,6 @@ public class NonRepatingAlarmFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_non_repating_alarm,container,false);
         fireAtButton = view.findViewById(R.id.non_repating_alarm_time_button);
         setAlarmButton = view.findViewById(R.id.non_repating_set_alarm_button);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 }

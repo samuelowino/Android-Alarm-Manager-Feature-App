@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_margin="12dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/non_repating_alarm_time_button"
