@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import org.kazitek.androidalarm_labs.adapter.ViewPagerAdapter;
 import org.kazitek.androidalarm_labs.broadcastreceivers.AirplaneModeBroadcastReceiver;
+import org.kazitek.androidalarm_labs.broadcastreceivers.RefreshSelectBroadcastReceiver;
 import org.kazitek.androidalarm_labs.fragments.NonRepatingAlarmFragment;
 import org.kazitek.androidalarm_labs.fragments.RepeatingAlarmFragment;
 
@@ -137,12 +138,22 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
 
+        refereshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent refreshIntent = new Intent();
+                refreshIntent.setAction(RefreshSelectBroadcastReceiver.INTENT_ACTION);
+                sendBroadcast(refreshIntent);
+            }
+        });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        registerAirplabeModeContextBroadcast();
+        registerAirplaneModeContextBroadcast();
+        registerRefereshActionBroadcastReceiver();
     }
 
     private void activateOptionButton(Button elapsedRealtimeButton) {
@@ -155,9 +166,14 @@ public class MainActivity extends AppCompatActivity {
         elapsedRealtimeButton.setTextColor(getResources().getColor(android.R.color.black));
     }
 
-    private void registerAirplabeModeContextBroadcast(){
+    private void registerAirplaneModeContextBroadcast(){
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
         MainActivity.this.registerReceiver(new AirplaneModeBroadcastReceiver(),intentFilter);
+    }
+
+    private void registerRefereshActionBroadcastReceiver(){
+        IntentFilter intentFilter = new IntentFilter(RefreshSelectBroadcastReceiver.INTENT_ACTION);
+        MainActivity.this.registerReceiver( new RefreshSelectBroadcastReceiver(),intentFilter);
     }
 }
