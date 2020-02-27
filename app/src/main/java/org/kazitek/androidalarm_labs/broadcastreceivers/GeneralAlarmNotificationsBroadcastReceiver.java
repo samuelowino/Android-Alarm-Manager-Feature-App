@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -20,7 +21,10 @@ public class GeneralAlarmNotificationsBroadcastReceiver extends BroadcastReceive
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         String action = intent.getAction();
+
+        Toast.makeText(context,"General alarm receiver",Toast.LENGTH_SHORT).show();
 
         if (action != null && action.equalsIgnoreCase(INTENT_ACTION))
             showNotification(context);
@@ -46,7 +50,7 @@ public class GeneralAlarmNotificationsBroadcastReceiver extends BroadcastReceive
         Notification notification = notificationsBuilder.build();
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        notificationManagerCompat.notify(111,notification);
+        notificationManagerCompat.notify((int) System.currentTimeMillis(),notification);
 
     }
 }
