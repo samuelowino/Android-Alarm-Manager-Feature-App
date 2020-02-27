@@ -11,8 +11,16 @@ import org.kazitek.androidalarm_labs.fragments.RepeatingAlarmFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    private NonRepatingAlarmFragment nonRepatingAlarmFragment;
+    private RepeatingAlarmFragment repeatingAlarmFragment;
+
+    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior,
+                            NonRepatingAlarmFragment nonRepatingAlarmFragment,
+                            RepeatingAlarmFragment repeatingAlarmFragment) {
         super(fm, behavior);
+
+        this.nonRepatingAlarmFragment = nonRepatingAlarmFragment;
+        this.repeatingAlarmFragment = repeatingAlarmFragment;
     }
 
     @NonNull
@@ -20,9 +28,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new NonRepatingAlarmFragment();
+                return nonRepatingAlarmFragment;
             case 1:
-                return new RepeatingAlarmFragment();
+                return repeatingAlarmFragment;
             default:
                 return null;
         }

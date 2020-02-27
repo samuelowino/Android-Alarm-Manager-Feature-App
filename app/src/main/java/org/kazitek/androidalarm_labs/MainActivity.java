@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 
 import org.kazitek.androidalarm_labs.adapter.ViewPagerAdapter;
+import org.kazitek.androidalarm_labs.fragments.NonRepatingAlarmFragment;
+import org.kazitek.androidalarm_labs.fragments.RepeatingAlarmFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     Button repeatingButton;
     Button exactRepeatingButton;
     Button nonRepeating;
+
+    NonRepatingAlarmFragment nonRepatingAlarmFragment;
+    RepeatingAlarmFragment repeatingAlarmFragment;
 
 
     @Override
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         exactRepeatingButton = findViewById(R.id.exact_repating_button);
         nonRepeating = findViewById(R.id.non_repeating_button);
 
+        nonRepatingAlarmFragment = new NonRepatingAlarmFragment();
+        repeatingAlarmFragment = new RepeatingAlarmFragment();
+
         refereshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 activateOptionButton(elapsedRealtimeButton);
                 deActivateOptionButton(realtimeClockButton);
+                nonRepatingAlarmFragment.setElapsedTime(true);
             }
         });
 
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 activateOptionButton(wakeUpButton);
                 deActivateOptionButton(nonWakeUpButton);
+                nonRepatingAlarmFragment.setWakeUp(true);
             }
         });
 
@@ -80,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 activateOptionButton(nonWakeUpButton);
                 deActivateOptionButton(wakeUpButton);
+                nonRepatingAlarmFragment.setWakeUp(false);
             }
         });
 
@@ -89,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 activateOptionButton(repeatingButton);
                 deActivateOptionButton(exactRepeatingButton);
                 deActivateOptionButton(nonRepeating);
+                viewPager.setCurrentItem(1);
             }
         });
 
@@ -98,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 activateOptionButton(exactRepeatingButton);
                 deActivateOptionButton(repeatingButton);
                 deActivateOptionButton(nonRepeating);
+
+                viewPager.setCurrentItem(1);
             }
         });
 
@@ -107,10 +121,16 @@ public class MainActivity extends AppCompatActivity {
                 activateOptionButton(nonRepeating);
                 deActivateOptionButton(exactRepeatingButton);
                 deActivateOptionButton(repeatingButton);
+                viewPager.setCurrentItem(0);
             }
         });
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        adapter = new ViewPagerAdapter(
+                getSupportFragmentManager(),
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+                nonRepatingAlarmFragment,
+                repeatingAlarmFragment);
+
         viewPager.setAdapter(adapter);
 
     }
