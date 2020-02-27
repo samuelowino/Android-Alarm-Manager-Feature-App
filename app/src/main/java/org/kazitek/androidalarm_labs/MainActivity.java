@@ -17,7 +17,7 @@ import org.kazitek.androidalarm_labs.adapter.ViewPagerAdapter;
 import org.kazitek.androidalarm_labs.broadcastreceivers.AirplaneModeBroadcastReceiver;
 import org.kazitek.androidalarm_labs.broadcastreceivers.GeneralAlarmNotificationsBroadcastReceiver;
 import org.kazitek.androidalarm_labs.broadcastreceivers.RefreshSelectBroadcastReceiver;
-import org.kazitek.androidalarm_labs.fragments.NonRepatingAlarmFragment;
+import org.kazitek.androidalarm_labs.fragments.NonRepeatingAlarmFragment;
 import org.kazitek.androidalarm_labs.fragments.RepeatingAlarmFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button exactRepeatingButton;
     Button nonRepeating;
 
-    NonRepatingAlarmFragment nonRepatingAlarmFragment;
+    NonRepeatingAlarmFragment nonRepeatingAlarmFragment;
     RepeatingAlarmFragment repeatingAlarmFragment;
 
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         exactRepeatingButton = findViewById(R.id.exact_repating_button);
         nonRepeating = findViewById(R.id.non_repeating_button);
 
-        nonRepatingAlarmFragment = new NonRepatingAlarmFragment();
+        nonRepeatingAlarmFragment = new NonRepeatingAlarmFragment();
         repeatingAlarmFragment = new RepeatingAlarmFragment();
 
         refereshButton.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 activateOptionButton(elapsedRealtimeButton);
                 deActivateOptionButton(realtimeClockButton);
-                nonRepatingAlarmFragment.setElapsedTime(true);
+                nonRepeatingAlarmFragment.setElapsedTime(true);
             }
         });
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 activateOptionButton(wakeUpButton);
                 deActivateOptionButton(nonWakeUpButton);
-                nonRepatingAlarmFragment.setWakeUp(true);
+                nonRepeatingAlarmFragment.setWakeUp(true);
             }
         });
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 activateOptionButton(nonWakeUpButton);
                 deActivateOptionButton(wakeUpButton);
-                nonRepatingAlarmFragment.setWakeUp(false);
+                nonRepeatingAlarmFragment.setWakeUp(false);
             }
         });
 
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
-                nonRepatingAlarmFragment,
+                nonRepeatingAlarmFragment,
                 repeatingAlarmFragment);
 
         viewPager.setAdapter(adapter);

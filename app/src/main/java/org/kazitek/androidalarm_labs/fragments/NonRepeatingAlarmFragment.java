@@ -26,7 +26,7 @@ import org.kazitek.androidalarm_labs.broadcastreceivers.GeneralAlarmNotification
 
 import java.util.Calendar;
 
-public class NonRepatingAlarmFragment extends Fragment {
+public class NonRepeatingAlarmFragment extends Fragment {
 
     private Button fireAtButton;
     private Button setAlarmButton;
