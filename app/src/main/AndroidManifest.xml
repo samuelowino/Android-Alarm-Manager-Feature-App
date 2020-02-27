@@ -23,6 +23,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".broadcastreceivers.GeneralAlarmNotificationsBroadcastReceiver">
+            <intent-filter>
+                <action android:name="general_alarm_notifications_intent_action"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
