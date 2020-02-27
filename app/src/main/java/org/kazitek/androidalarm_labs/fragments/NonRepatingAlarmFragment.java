@@ -77,10 +77,11 @@ public class NonRepatingAlarmFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent notificationReceiverIntent = new Intent(getContext(), GeneralAlarmNotificationsBroadcastReceiver.class);
+                notificationReceiverIntent.setAction(GeneralAlarmNotificationsBroadcastReceiver.INTENT_ACTION);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), (int) System.currentTimeMillis(), notificationReceiverIntent, 0);
 
                 AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmTimeCalendar.getTimeInMillis(), pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTimeCalendar.getTimeInMillis(), pendingIntent);
 
                 showAlarmSetNotification();
             }
