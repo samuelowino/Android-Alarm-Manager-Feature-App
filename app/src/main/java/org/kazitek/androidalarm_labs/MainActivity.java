@@ -6,11 +6,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import org.kazitek.androidalarm_labs.adapter.ViewPagerAdapter;
+import org.kazitek.androidalarm_labs.broadcastreceivers.AirplaneModeBroadcastReceiver;
 import org.kazitek.androidalarm_labs.fragments.NonRepatingAlarmFragment;
 import org.kazitek.androidalarm_labs.fragments.RepeatingAlarmFragment;
 
@@ -135,6 +139,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerAirplabeModeContextBroadcast();
+    }
+
     private void activateOptionButton(Button elapsedRealtimeButton) {
         elapsedRealtimeButton.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
         elapsedRealtimeButton.setTextColor(getResources().getColor(android.R.color.white));
@@ -143,5 +153,11 @@ public class MainActivity extends AppCompatActivity {
     private void deActivateOptionButton(Button elapsedRealtimeButton) {
         elapsedRealtimeButton.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
         elapsedRealtimeButton.setTextColor(getResources().getColor(android.R.color.black));
+    }
+
+    private void registerAirplabeModeContextBroadcast(){
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        MainActivity.this.registerReceiver(new AirplaneModeBroadcastReceiver(),intentFilter);
     }
 }
