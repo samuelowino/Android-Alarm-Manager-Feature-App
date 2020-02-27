@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import org.kazitek.androidalarm_labs.adapter.ViewPagerAdapter;
 import org.kazitek.androidalarm_labs.broadcastreceivers.AirplaneModeBroadcastReceiver;
+import org.kazitek.androidalarm_labs.broadcastreceivers.GeneralAlarmNotificationsBroadcastReceiver;
 import org.kazitek.androidalarm_labs.broadcastreceivers.RefreshSelectBroadcastReceiver;
 import org.kazitek.androidalarm_labs.fragments.NonRepatingAlarmFragment;
 import org.kazitek.androidalarm_labs.fragments.RepeatingAlarmFragment;
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         registerAirplaneModeContextBroadcast();
         registerRefereshActionBroadcastReceiver();
+        registerGeneralAlarmBroadcastReceiver();
     }
 
     private void activateOptionButton(Button elapsedRealtimeButton) {
@@ -175,5 +177,10 @@ public class MainActivity extends AppCompatActivity {
     private void registerRefereshActionBroadcastReceiver(){
         IntentFilter intentFilter = new IntentFilter(RefreshSelectBroadcastReceiver.INTENT_ACTION);
         MainActivity.this.registerReceiver( new RefreshSelectBroadcastReceiver(),intentFilter);
+    }
+
+    private void registerGeneralAlarmBroadcastReceiver(){
+        IntentFilter intentFilter = new IntentFilter(GeneralAlarmNotificationsBroadcastReceiver.INTENT_ACTION);
+        MainActivity.this.registerReceiver(new GeneralAlarmNotificationsBroadcastReceiver(),intentFilter);
     }
 }

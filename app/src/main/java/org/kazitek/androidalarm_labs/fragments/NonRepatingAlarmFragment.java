@@ -19,6 +19,9 @@ import androidx.fragment.app.Fragment;
 
 import org.kazitek.androidalarm_labs.MainActivity;
 import org.kazitek.androidalarm_labs.R;
+import org.kazitek.androidalarm_labs.broadcastreceivers.GeneralAlarmNotificationsBroadcastReceiver;
+
+import java.util.Calendar;
 
 public class NonRepatingAlarmFragment extends Fragment {
 
@@ -27,6 +30,8 @@ public class NonRepatingAlarmFragment extends Fragment {
 
     private Boolean isElapsedTime;
     private Boolean isWakeUp;
+
+    private Calendar alarmTimeCalendar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,8 +52,10 @@ public class NonRepatingAlarmFragment extends Fragment {
                         getContext(),
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
-                            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-
+                            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                                alarmTimeCalendar = Calendar.getInstance();
+                                alarmTimeCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                                alarmTimeCalendar.set(Calendar.MINUTE, minute);
                             }
                         },
                         12,
@@ -66,34 +73,15 @@ public class NonRepatingAlarmFragment extends Fragment {
         setAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent notificationReceiverIntent = new Intent(getContext(), GeneralAlarmNotificationsBroadcastReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 100, notificationReceiverIntent, 0);
+
                 AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 32, getPendingIntent());
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmTimeCalendar.getTimeInMillis(), pendingIntent);
             }
         });
 
         return view;
-    }
-
-    private PendingIntent getPendingIntent() {
-
-        Intent intent = new Intent(getContext(),MainActivity.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),0,intent,0);
-
-        NotificationCompat.Builder notificationBuilder = new
-                NotificationCompat.Builder(getContext(), "DEFAULT_CHANNLE")
-                .setContentTitle("Non Repeating Alarm Fired")
-                .setContentText("This is a non repeating one time alarm")
-                .addAction(new NotificationCompat.Action(
-                        R.drawable.ic_launcher_background
-                        , "Reply", pendingIntent))
-                .addAction(new NotificationCompat.Action(
-                        R.drawable.ic_launcher_background,
-                        "Snooze", pendingIntent))
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-        return pendingIntent;
-
     }
 
     public Boolean getElapsedTime() {
